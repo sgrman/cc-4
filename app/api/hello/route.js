@@ -3,19 +3,26 @@ import { getRequestContext } from '@cloudflare/next-on-pages'
 export const runtime = 'edge'
 
 export async function GET(request) {
-  let responseText = 'Hello World'
+  console.log("Logging: " + request.url)
+	
+	//My Lookuptable
+	const randomresponse = {
 
-  // In the edge runtime you can use Bindings that are available in your application
-  // (for more details see:
-  //    - https://developers.cloudflare.com/pages/framework-guides/deploy-a-nextjs-site/#use-bindings-in-your-nextjs-application
-  //    - https://developers.cloudflare.com/pages/functions/bindings/
-  // )
-  //
-  // KV Example:
-  // const myKv = getRequestContext().env.MY_KV_NAMESPACE
-  // await myKv.put('suffix', ' from a KV store!')
-  // const suffix = await myKv.get('suffix')
-  // responseText += suffix
+		1: "Would you like a cheeseburger?",
+		2: "Would you like a salad?",
+		3: "Would you like a cold beverage?",
+		4: "Would you like another round?",
+	};
 
-  return new Response(responseText)
-}
+	function getRandomIntInclusive(min, max) {
+		const minCeiled = Math.ceil(min);
+		const maxFloored = Math.floor(max);
+		return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); // The maximum is inclusive and the minimum is inclusive
+	  }
+	  
+	const ResponseNumber = getRandomIntInclusive(1,4);
+	const responsemap = randomresponse[ResponseNumber];
+
+	return new Response (responsemap);
+	
+	}
