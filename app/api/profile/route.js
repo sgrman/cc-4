@@ -5,7 +5,7 @@ export const runtime = 'edge'
 export async function GET(request) {
  
 	
-	//My KV
+	//My Variables
 	const KV = getRequestContext().env.cc_5
 	const userID = request.headers.get("UserId")
 	const validuser = await KV.get(UserId)
@@ -16,16 +16,14 @@ export async function GET(request) {
 		return new Response("The User is Invalid")
 	}
 
-//Set Auth Token in Request
+//For Valid Users, Set the Auth-Token
 	else {
+	let value = await KV.get("Value")
 	const newrequest = new Request(request)
 	newrequest.headers.set("Auth-Token", value)
-	const token = newrequest.headers.get("Auth-Token")
-	console.log(token)
+	
 
 	}
 	
 
-
-		
 	};
